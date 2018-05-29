@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>超级阿国</title>
+
+
+
+	<!-- 引入 jQuery Mobile 样式 -->
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+<!-- 引入 jQuery 库 -->
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- 引入 jQuery Mobile 库 -->
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+	<script type="text/javascript" src="./game.js"></script>
+
+
+<style type="text/css">
+*{margin:0px;padding: 0px;}
+#gameZone{width:100%;height:350px;background-color:#F3F3F3;}
+#top{height:50px;}
+#left,#center,#right{width:33.3%;height:50px;float:left;text-align: center;}
+#game{width:100%;height:300px;background-color:white;}
+#road{width:100%;height:50px;background-color:#D5D5D5;border:none;}
+#bottom{width:100%;height:100px;margin-top: 10px;background-color:;}
+#jump{width:48%;height:50px;background-color:#329FC4;float:right;border-radius:30px;margin-top:2px;text-align:center;}
+#gongji{width:48%;height:50px;background-color:#C45162;float:left;border-radius:30px;margin-top:2px;text-align:center;}
+#manPerson{width:;height:50px;background-color:;margin-left:0px;margin-top: 50px;position: absolute;border-radius: 50px;display:none;}
+#jiayou{width:80px;height:80px;background-color:;margin-left:100%;margin-top:10px;position: absolute;display:none;}
+#zhangaiWu{width:25px;height:25px;background-color:red;margin-left:90%;margin-top: 250px;position:absolute;display:none;border-radius:25px;}
+#zhangaiWu2{width:25px;height:25px;background-color:red;margin-left:90%;margin-top: 275px;position:absolute;display:none;border-radius:25px;}
+/*路面上的障碍物（墙）*/
+#zhangaiWuTop{width:20px;height:36px;background-color:;margin-left:100%;margin-top: 264px;position:absolute;display:none;}
+#zhangaiWuTop1{width:100%;height:12px;background-color:red;}
+#zhangaiWuTop2{width:100%;height:12px;background-color:#8AF3EA;}
+#zhangaiWuTop3{width:100%;height:12px;background-color:red;}
+#keng{width:80px;height:50px;background-color:white;margin-left:-100%;display:none;position: absolute;margin-top:300px;}
+#finish{width:30%;height:76px;background-color:#414141;margin-left:33.3%;margin-top:50px;position: absolute;display:none;border-radius:30px;text-align: center;padding-top: 20px;}
+#tianxian{width:50%;height:5px;background-color:#69BEFF;margin-top:130px;margin-left:20px;position: absolute;display:none;}
+#xuangua{width:100%;height:50px;background-color:#20CC6B;float:left;border-radius:30px;text-align:center;margin-top:0px;}
+.jinbi{width:440px;height:30px;display:;background-color:;position:absolute;margin-left:100%;margin-top:270px;}
+#daojishi{width:33%;height:65px;background-color:#414141;border-radius: 80px;margin-top:120px;margin-left:33%;position: absolute;display:;text-align: center;padding-top: 20px;color:white;}
+#jiafen{width:60px;height:30px;background-color:#FF6441;border-radius: 80px;margin-top:50px;margin-left:5%;position: absolute;display:none;text-align: center;padding-top: 10px;font-size:20px;color:white;}
+#big_guaiwu1{width:100px;height:100px;background-color:red;position:absolute;margin-top:200px;margin-left:100%;display:;}
+</style>
+
+
+</head>
+<body>
+
+
+
+
+
+
+<div data-role="page" style="padding:0px;margin:0px;">
+	
+
+	
+	
+	<div data-role="content" style="padding:0px;">
+		
+		<div id="top">
+			<div id="left" style="background-color: #137FF3;text-align:center;">
+				<span id="" style='font-size:20px;color:white;'>时间</span><br>
+				<span id="left_font" style='font-size:20px;color:white;'></span>
+			</div>
+			<div id="center" style="background-color:#F36730;">
+				<img src="./jinbi.png" style="width:25px;height:25px"><br>
+				<span id="jinbi_total" style='font-size:20px;color:white;'>0</span>
+			</div>
+			<div id="right" style="background-color:#FF6E90;">
+				<img src="./zhadan2.png" style="width:25px;height:25px;border-radius:25px;"><br>
+				<span id="gongji_total" style='font-size:20px;color:white;'>100</span>
+			</div>
+		</div>
+
+
+		<div id="gameZone">
+			
+			<div id="game">
+				<!--倒计时-->
+				<div id="daojishi">
+						<span id="center_font" style="font-size:30px;color:white;"></span>
+				</div>
+
+				<!--背景音乐-->
+				<audio id="bgMusic" src="" autoplay="true" loop="true"></audio>
+
+				<!--跳跃音乐-->
+				<audio id="jumpMusic" src="" autoplay="true" loop="flase"></audio>
+				
+				<!--天线（攀爬）-->
+				<div id="tianxian"></div>
+
+				
+	
+	
+				<!--主角色-->
+				<div id="manPerson">
+					<img id="manPerson_img" src="" style="width:50px;height:50px;">
+					<div class="gongji_g" style="float:right;margin-top:15px;display:none;border-radius:100px;">
+						<img class="gongji_g" src="./zhadan1.png" style="width:20px;height:20px;display:;">
+					</div>
+				</div>
+		
+				<!--加油动画-->
+				<div id="jiayou">
+					<img id="jiayou_img" src="" style="width:60px;height:60px;position:absolute;">
+				</div>
+				
+				<!--金币-->
+				<div class="jinbi">
+					
+				</div>
+
+				<!--障碍物1（上）-->
+				<div id="zhangaiWu">
+	
+				</div>
+
+				<!--障碍物2（下）-->
+				<div id="zhangaiWu2">
+				
+				</div>
+
+				<!--障碍物（路上的墙）-->
+				<div id="zhangaiWuTop">
+					<div id="zhangaiWuTop1"></div>
+					<div id="zhangaiWuTop2"></div>
+					<div id="zhangaiWuTop3"></div>
+				</div>
+
+				<!--大怪物持续出现-->
+				<div id="big_guaiwu1">
+					<img id="guaiwu_img" src="" style="width:100px;height:100px;">
+				</div>
+				
+				
+
+				<!--加分,-->
+				<div id="jiafen">
+					<span id="jiafen_total" style="font-size:15px;font-weight:normal;"></span>
+				</div>
+
+				<!--游戏结束-->
+				<a href="./indexG.html" style="text-decoration:none;">
+					<div id="finish" onclick="window.location.href='./indexG.html';">
+						<span id="total_score" style="font-size:19px;color:#FF6441;"></span>
+						<br><span style="font-size:19px;color:white;margin-top:5px;"><em>重新开始</em></span>
+					</div>
+				</a>
+				
+				<div id="keng"></div>	
+			</div>
+
+			
+			<div id="road">
+				
+			</div>
+		</div>
+
+		
+
+		<div id="bottom">
+			<a href="#" style="text-decoration:none;">
+				<div id="xuangua">
+					<span id="sxFont" style="font-size:40px;color:white;">上天</span>
+				</div>
+			</a>
+			<a href=""><div id="gongji"><span style="font-size:40px;color:white;">攻击</span></div></a>
+			<a href=""><div id="jump"><span style="font-size:40px;color:white;">跳跃</span></div></a>
+			<!--按钮点击悬挂天上-->
+			
+		</div>
+		
+		<h1 id="ifp"></h1>
+		
+
+	</div>
+
+	
+</div>
+
+
+
+
+
+</body>
+</html>
